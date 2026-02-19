@@ -6,6 +6,7 @@ inputs:
     description: The version of argocd-diff-preview to use
     required: true
     default: "0.1.23"
+  
   os:
     type: choice
     description: "Runner operating system, options are 'Darwin-aarch64', 'Darwin-x86_64', 'Linux-aarch64', 'Linux-x86_64. defaults to: 'Linux-x86_64'."
@@ -16,10 +17,12 @@ inputs:
       - Darwin-x86_64
       - Linux-x86_64
       - Linux-aarch64
+  
   github_token:
     type: string
     description: GitHub Authentication Token
     required: true
+  
   repo:
     type: string
     description: Git Repository in format OWNER/REPO (e.g., dag-andersen/argocd-diff-preview)
