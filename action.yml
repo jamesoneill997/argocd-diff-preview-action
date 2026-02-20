@@ -240,7 +240,6 @@ runs:
         input_keys=$(echo $filtered_json | jq 'keys')
         options_str=""
         echo "Raw input keys: $input_keys"
-        # converting the json array into a bash array
         input_keys=$(echo $input_keys | sed -e 's/\[ //g' -e 's/\ ]//g' -e 's/\,//g')
         echo "Parsing input keys: $input_keys"
 
