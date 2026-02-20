@@ -23,12 +23,12 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         shell: bash
         env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+          GH_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: npx semantic-release --dry-run
 
       - name: Tag Release
         if: ${{ github.ref == 'refs/heads/master' }}
         shell: bash
         env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+          GH_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: npx semantic-release
