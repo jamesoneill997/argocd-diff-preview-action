@@ -249,6 +249,7 @@ runs:
           formatted_flag_str=${raw_flag_str//\"}
           options_str+=$formatted_flag_str
         done
+
         echo "Running argocd diff preview with flags and options: $options_str"
         argocd-diff-preview $options_str
 
