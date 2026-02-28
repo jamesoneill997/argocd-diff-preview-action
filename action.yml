@@ -3,9 +3,9 @@ description: Render argo diff between two branches in a repository
 inputs:
   version:
     type: string
-    description: The version of argocd-diff-preview to use
+    description: "The version of argocd-diff-preview to use (defaults to: 'latest')"
     required: true
-    default: "0.1.23"
+    default: "latest"
   
   os:
     type: choice
@@ -225,6 +225,14 @@ runs:
     - name: Install argocd-diff-preview
       shell: bash
       run: |
+        version=""
+        latest_argocd_diff_preview_version="0.1.23"
+        if [[ ${{ inputs.version }} == 'latest' ]]; then
+          version="$latest_argocd_diff_preview_version"
+        else
+          version="${{ inputs.version }}"
+        fi
+
         curl -LJO https://github.com/dag-andersen/argocd-diff-preview/releases/download/v${{ inputs.version }}/argocd-diff-preview-${{ inputs.os }}.tar.gz
         tar -xvf argocd-diff-preview-${{ inputs.os }}.tar.gz
         sudo mv argocd-diff-preview /usr/local/bin
