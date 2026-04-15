@@ -3,12 +3,15 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["action.yml"],
-      "matchStrings": ["latest_argocd_diff_preview_version=\"$(?<currentValue>)\""],
+      "managerFilePatterns": [
+        "action.yml"
+      ],
+      "matchStrings": [
+        "latest_argocd_diff_preview_version=\"(?<currentValue>[^\"]+)\""
+      ],
       "versioningTemplate": "semver",
       "datasourceTemplate": "github-releases",
-      "registryUrlTemplate": "https://github.com/dag-andersen/argocd-diff-preview/releases",
-      "depNameTemplate": "argocd-diff-preview"
+      "depNameTemplate": "dag-andersen/argocd-diff-preview"
     }
   ]
 }
