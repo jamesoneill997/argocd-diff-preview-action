@@ -43,14 +43,14 @@ inputs:
     description: "Disable client-side throttling (rely on API Priority and Fairness instead) (defaults to: false)"
     required: false
 
-  auto-detect-file-change:
+  auto-detect-files-changed:
     type: boolean
-    description: "Auto detect files changed between branches (defaults to: false)"
+    description: "Auto detect files changed between branches (defaults to: true)"
     required: false
 
   watch-if-no-match-pattern-found:
     type: boolean
-    description: "Render applications without watch-pattern annotation (defaults to: false)"
+    description: "Render applications without watch-pattern annotation (defaults to: true)"
     required: false
   
   debug:
@@ -83,11 +83,6 @@ inputs:
     description: "Use the kind cluster's internal address in the kubeconfig (allows connecting to the cluster when running the CLI in a container) (defaults to: false)"
     required: false
 
-  use-argocd-api:
-    type: boolean
-    description: "Use Argo CD API instead of CLI (useful for namespace-scoped Argo CD installations) (defaults to: false)"
-    required: false
-
   # --- options --- #
   argocd-chart-version:
     type: string
@@ -114,6 +109,11 @@ inputs:
     required: false
     description: Argo CD Helm Chart Private repository password
 
+  argocd-config-dir:
+    type: string
+    required: false
+    description: Path to the Argo CD config folder (contains values.yaml for Helm chart customization) (defaults to "./argocd-config")
+
   argocd-login-options:
     type: string
     required: false
@@ -129,6 +129,11 @@ inputs:
     required: false
     description: Namespace to use for Argo CD (defaults to 'argocd')
 
+  argocd-ui-url:
+    type: string
+    required: false
+    description: Argo CD URL to generate application links in diff output (e.g., https://argocd.example.com)
+
   base-branch:
     type: string
     required: false
@@ -143,6 +148,11 @@ inputs:
     type: string
     required: false
     description: Cluster name (only for kind & k3d) (defaults to argocd-diff-preview)
+
+  concurrency:
+    type: string
+    required: false
+    description: Max concurrent application processing (0 = unlimited, not recommended) (defaults to "40")
 
   diff-ignore:
     type: string
@@ -177,7 +187,7 @@ inputs:
   line-count:
     type: number
     required: false
-    description: Generate diffs with \<n> lines of context (defaults to 7)
+    description: Generate diffs with \<n> lines of context (defaults to 5)
 
   log-format:
     type: string
@@ -194,10 +204,25 @@ inputs:
     required: false
     description: Output folder where the diff will be saved (defaults to ./output)
 
+  output-app-manifests:
+    type: string
+    required: false
+    description: Write each application's manifests to its own file under output/base/ and output/target/ (defaults to false)
+
+  output-branch-manifests:
+    type: string
+    required: false
+    description: Write all application manifests per branch into a single file (output/base-branch.yaml and output/target-branch.yaml) (defaults to false)
+
   redirect-target-revisions:
     type: string
     required: false
     description: List of target revisions to redirect
+
+  render-method:
+    type: string
+    required: false
+    description: "Manifest rendering method. Options: cli, server-api, repo-server-api (defaults to server-api)"
 
   secrets-folder:
     type: string
@@ -216,8 +241,13 @@ inputs:
 
   title:
     type: string
-    description: Custom title for the markdown output (defaults to 'Argo CD Diff Preview')
     required: false
+    description: Custom title for the markdown output (defaults to 'Argo CD Diff Preview')
+
+  traverse-app-of-apps:
+    type: string
+    required: false
+    description: "[Experimental] Includes rendered child applications in diff, see: https://dag-andersen.github.io/argocd-diff-preview/app-of-apps/"
 
 runs:
   using: "composite"
