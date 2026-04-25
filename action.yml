@@ -256,7 +256,7 @@ runs:
       shell: bash
       run: |
         version=""
-        latest_argocd_diff_preview_version="0.2.3"
+        latest_argocd_diff_preview_version="0.2.4"
         if [[ ${{ inputs.version }} == 'latest' ]]; then
           version="$latest_argocd_diff_preview_version"
         else
